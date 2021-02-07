@@ -1665,6 +1665,17 @@ pub trait Formatter {
         writer.write_all(s.as_bytes())
     }
 
+    /// Writes an integer value like `-123` to the specified writer.
+    #[inline]
+    fn write_i128<W>(&mut self, writer: &mut W, value: i128) -> io::Result<()>
+    where
+        W: ?Sized + io::Write,
+    {
+        let mut buffer = itoa::Buffer::new();
+        let s = buffer.format(value);
+        writer.write_all(s.as_bytes())
+    }
+
     /// Writes an integer value like `123` to the specified writer.
     #[inline]
     fn write_u8<W>(&mut self, writer: &mut W, value: u8) -> io::Result<()>
